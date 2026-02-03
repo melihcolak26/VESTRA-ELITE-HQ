@@ -4,7 +4,7 @@ import { DECISION_TEMPLATES } from './templates/data'
 import Wizard from './components/Wizard'
 import Analyst from './components/Analyst'
 import Blueprint from './components/Blueprint'
-import { Zap, Play, BarChart3, Shield, Cpu, Lock, HelpCircle } from 'lucide-react'
+import { Zap, Play, BarChart3, Shield, Cpu, Lock, HelpCircle, Monitor } from 'lucide-react'
 
 function App() {
   const [view, setView] = useState(() => localStorage.getItem('vestra_view') || 'landing')
@@ -44,15 +44,24 @@ function App() {
             </div>
           </nav>
 
-          <main className="container" style={{ textAlign: 'center', paddingTop: '100px' }}>
-            <h1 className="shimmer-text" style={{ fontSize: '4rem', marginBottom: '20px' }}>Vestra Elite Yayında.</h1>
-            <p style={{ fontSize: '1.2rem', opacity: 0.8, marginBottom: '40px' }}>
-              Bilimsel karar alma motoru başarıyla güncellendi kanki.
+          <main className="container" style={{ textAlign: 'center', paddingTop: '150px' }}>
+            <div className="badge-v6" style={{ margin: '0 auto 2rem' }}>
+               <Zap size={14} fill="currentColor" /> VESTRA ELITE COMMAND CENTER
+            </div>
+            <h1 className="shimmer-text" style={{ fontSize: '6rem', marginBottom: '30px', fontWeight: 900, letterSpacing: '-5px' }}>
+               The Science of Choice.
+            </h1>
+            <p style={{ fontSize: '1.5rem', color: '#94A3B8', maxWidth: '900px', margin: '0 auto 60px', lineHeight: '1.4' }}>
+              Dünyanın en vizyoner liderleri için inşa edilen hibrit karar verme mimarisi. 
+              Karmaşıklığı, matematiksel kesinliğe dönüştürüyoruz.
             </p>
             
             <div className="cta-group" style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-              <button className="btn-elite btn-elite-primary" onClick={() => setView('analyst')}>
-                 ANALİZ PANELİ <Play size={18} fill="currentColor" />
+              <button className="btn-elite btn-elite-primary" style={{ padding: '1.5rem 4rem' }} onClick={() => setView('analyst')}>
+                 LANSMANI BAŞLAT <Play size={20} fill="currentColor" />
+              </button>
+              <button className="btn-elite btn-elite-secondary" style={{ padding: '1.5rem 4rem' }} onClick={() => setView('blueprint')}>
+                 THE BLUEPRINT <Monitor size={20} />
               </button>
             </div>
             
