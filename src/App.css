@@ -2,10 +2,20 @@
   --primary: #10B981;
   --secondary: #3B82F6;
   --bg-dark: #020617;
-  --card-bg: rgba(15, 23, 42, 0.8);
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
   --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Blueprint System */
+  --blueprint-primary: #1E40AF;
+  --blueprint-bg: #F0F4F8;
+  --blueprint-grid: #BFDBFE;
+  --blueprint-dark: #1E3A8A;
+  --accent-orange: #F59E0B;
+  --accent-green: #10B981;
+  --accent-red: #DC2626;
+  --weight-blue: #3B82F6;
+  --rank-green: #059669;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,51 +23,112 @@
 body {
   background: var(--bg-dark);
   color: var(--text-primary);
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-.platform-root {
+.mono { font-family: 'JetBrains Mono', monospace; }
+.technical { font-family: 'Courier New', monospace; }
+
+/* Blueprint Pattern */
+.blueprint-grid-bg {
+  background-color: var(--blueprint-bg);
+  background-image: 
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--blueprint-dark);
+}
+
+.blueprint-border {
+  border: 2px dashed var(--blueprint-primary);
+  box-shadow: 0 0 0 1px var(--blueprint-primary) inset;
+}
+
+.blueprint-card {
+  background: white;
+  border: 2px solid var(--blueprint-primary);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.blueprint-card:hover {
+  box-shadow: 0 0 20px rgba(30, 64, 175, 0.2);
+  transform: translateY(-2px);
+}
+
+.blueprint-table {
   width: 100%;
-  min-height: 100vh;
+  border-collapse: collapse;
+  background: white;
+  border: 2px solid var(--blueprint-primary);
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-.nav-elite {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--glass-border);
-  background: rgba(2, 6, 23, 0.9);
+.blueprint-table th {
+  background: var(--blueprint-primary);
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
 }
 
-.brand-v6 { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.blueprint-table td {
+  padding: 15px;
+  border-bottom: 1px solid var(--blueprint-grid);
+  color: var(--blueprint-dark);
+  font-size: 0.9rem;
+}
 
+.blueprint-table tr:hover {
+  background: rgba(30, 64, 175, 0.05);
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, currentColor 0%, var(--primary) 50%, currentColor 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Utility */
+.container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
 .btn-elite {
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 700;
   cursor: pointer;
   border: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition: 0.3s;
 }
 
-.btn-elite-primary { background: #fff; color: #000; }
-.btn-elite-secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--glass-border); }
+.btn-blueprint {
+  background: var(--blueprint-primary);
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+}
+
+.btn-blueprint:hover {
+  background: var(--blueprint-dark);
+}
 
 .card-elite {
-  background: var(--card-bg);
+  background: rgba(15, 23, 42, 0.8);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 30px;
+  border-radius: 12px;
 }
-
-.fade-in { animation: fadeIn 0.5s ease-out; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.elite-table { width: 100%; border-collapse: collapse; }
-.elite-table th, .elite-table td { padding: 15px; border-bottom: 1px solid var(--glass-border); text-align: center; }
-
-.text-emerald { color: var(--primary); }
-.font-black { font-weight: 900; }

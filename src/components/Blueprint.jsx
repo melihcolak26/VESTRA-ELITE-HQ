@@ -1,238 +1,240 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   ChevronLeft, Zap, ArrowRight, Target, Brain, Cpu, Layers, Compass, 
   ShieldCheck, Award, Box, Ruler, PenTool, Grid, Star, FileText, 
   Clock, HelpCircle, Briefcase, Users, DollarSign, Car, Package, 
-  Code, Info, MousePointer2, CheckCircle2, Layout, Activity, Monitor
+  Code, Info, MousePointer2, CheckCircle2, Layout, Activity, Monitor,
+  Play, Book, Download, MessageSquare, Wrench, Microscope, Scaling
 } from 'lucide-react';
 
 const Blueprint = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState('catalog');
+  const [activeStage, setActiveStage] = useState('catalog');
 
   const methods = [
-    { id: 'entropy', name: 'ENTROPY', emoji: '🎲', type: 'Ağırlıklandırma', diff: 2, time: '5', what: 'Verideki belirsizliği ve çeşitliliği ölçer.', how: 'Varyasyon ne kadar yüksekse o kriter o kadar güçlüdür.', example: 'Fiyatlar çok yakınsa %5, çok farklıysa %45 ağırlık verir.', when: ['Tamamen objektiflik', 'Hızlı veri filtrasyonu'], note: 'Veriler konuşsun istiyorsanız bu araç tam size göre!' },
-    { id: 'critic', name: 'CRITIC', emoji: '⚖️', type: 'İlişkisel Ağırlık', diff: 3, time: '10', what: 'Kriterler arası çatışmayı ve yoğunluğu ölçer.', how: 'Standart sapma ve korelasyon matrisini baz alır.', example: 'Hız ve yakıt arasındaki o meşhur kavgayı dengeler.', when: ['Çelişkili hedefler', 'Parametreler arası denge'], note: 'Kriterler birbiriyle kavga ediyorsa barışı bu sağlar.' },
-    { id: 'ahp', name: 'AHP (AI)', emoji: '🧠', type: 'Subjektif Ağırlık', diff: 4, time: '15', what: 'Uzman aklını matematiksel matrise döker.', how: 'Kimi AI desteğiyle ikili kıyaslama yapar.', example: 'Vizyonun %60, maliyetin %40 önemli olduğu durumlar.', when: ['Kişisel öncelikler', 'Stratejik vizyon kararları'], note: 'Kimi AI ile birleşince dünyanın en akıllı uzmanı olur.' },
-    { id: 'topsis', name: 'TOPSIS', emoji: '🎯', type: 'Sıralama Aracı', diff: 2, time: '5', what: 'En ideal hayali noktaya mesafeyi ölçer.', how: 'Euclidean mesafe algoritmasını kullanır.', example: 'Mükemmel gemiye en yakın olan seçeneği şampiyon yapar.', when: ['Genel seçimler', 'Yatırım kıyaslama'], note: 'Karar biliminin en popüler ve sağlam aracıdır.' },
-    { id: 'vikor', name: 'VIKOR', emoji: '🛡️', type: 'Uzlaşmacı Sıralama', diff: 4, time: '12', what: 'Minimum pişmanlık ve maksimum fayda arar.', how: 'Lp-metric tabanlı uzlaşma analizi yapar.', example: 'Herkesi orta noktada en mutlu edecek çözümü bulur.', when: ['Grup kararları', 'Yüksek risk yönetimi'], note: 'Hata lüksünüz yoksa bu protokole güvenin.' },
-    { id: 'waspas', name: 'WASPAS', emoji: '💎', type: 'Ultra Sıralama', diff: 5, time: '15', what: 'Toplamsal ve çarpımsal modelleri hibritler.', how: 'Hassasiyet katsayısını (lambda) optimize eder.', example: '%99.4 akademik tutarlılıkla en teknik seçimi yapar.', when: ['Maksimum doğruluk', 'Yüksek bütçeli alımlar'], note: 'Hata payını matematiksel olarak imkansız kılar.' }
+    { id: 'entropy', name: 'ENTROPY', emoji: '🎲', type: 'Ağırlıklandırma', diff: 2, time: '5', what: 'Verideki çeşitliliği ölçer.', how: 'Kriterdeki varyasyon yüksekse o kritere yüksek ağırlık verir.', example: 'Fiyatlar çok yakınsa %5, farklıysa %40 ağırlık.', when: ['Tamamen objektif analiz', 'Hızlı ağırlıklandırma'], note: 'Verileriniz konuşsun istiyorsanız bu araç tam size göre!' },
+    { id: 'critic', name: 'CRITIC', emoji: '⚖️', type: 'İlişkisel Ağırlık', diff: 3, time: '10', what: 'Kriter çatışmalarını ölçer.', how: 'Korelasyon ve sapmayı dengeler.', example: 'Hız ve yakıt arasındaki çatışmayı analiz eder.', when: ['Çelişkili hedefler', 'Kriterler arası yoğunluk'], note: 'Kriterler birbiriyle kavga ediyorsa barışı bu sağlar.' },
+    { id: 'ahp', name: 'AHP', emoji: '🧠', type: 'Subjektif Ağırlık', diff: 4, time: '15', what: 'Uzman aklını matrise döker.', how: 'İkili kıyaslama ve AI muhakemesi.', example: 'Vizyon %60, maliyet %40 gibi kişisel kararlar.', when: ['Kişisel öncelikler', 'Uzman tecrübesi'], note: 'Kimi AI ile birleşince dünyanın en akıllı uzmanı olur.' },
+    { id: 'topsis', name: 'TOPSIS', emoji: '🎯', type: 'Sıralama Aracı', diff: 2, time: '5', what: 'İdeal noktaya mesafeyi ölçer.', how: 'En iyiye yakın, en kötüye uzak olanı seçer.', example: 'Mükemmel gemiye en yakın seçeneği bulur.', when: ['Genel seçimler', 'Yatırım kıyaslama'], note: 'Karar biliminin en popüler ve sağlam aracıdır.' },
+    { id: 'vikor', name: 'VIKOR', emoji: '🛡️', type: 'Uzlaşmacı Sıralama', diff: 4, time: '12', what: 'Minimum pişmanlığı hedefler.', how: 'Maksimum grup faydası optimizasyonu.', example: 'Grup kararlarında herkesi mutlu eden orta yol.', when: ['Yüksek riskli dönüşümler', 'Grup kararları'], note: 'Hata lüksünüz yoksa bu protokole güvenin.' },
+    { id: 'waspas', name: 'WASPAS', emoji: '💎', type: 'Hibrit Sıralama', diff: 5, time: '15', what: 'Ultra hassas sıralama yapar.', how: 'Toplamsal ve çarpımsal birleşim.', example: '%99.4 akademik tutarlılıkla teknik seçimler.', when: ['Maksimum doğruluk', 'Teknik satın almalar'], note: 'Hata payını matematiksel olarak imkansız kılar.' }
   ];
 
   const projects = [
-    { id: '001', name: 'ARAÇ ALIMI', icon: <Car size={20} />, client: 'Bireysel', criteria: 5, alts: 4, arch: 'Entropy + TOPSIS', result: 'Model B (%87)' },
-    { id: '002', name: 'TEDARİKÇİ SEÇİMİ', icon: <Package size={20} />, client: 'Kurumsal', criteria: 8, alts: 12, arch: 'CRITIC + MOORA', result: 'Tedarikçi 4 (%92)' },
-    { id: '003', name: 'YATIRIM KARARI', icon: <Briefcase size={20} />, client: 'Yatırımcı', criteria: 6, alts: 5, arch: 'AHP + VIKOR', result: 'Gayrimenkul A (%84)' }
+    { id: '001', name: 'ARAÇ ALIMI', icon: <Car />, client: 'Bireysel', criteria: 5, alts: 4, arch: 'Entropy + TOPSIS', result: 'Model B (%87)' },
+    { id: '002', name: 'TEDARİKÇİ SEÇİMİ', icon: <Package />, client: 'Kurumsal', criteria: 8, alts: 12, arch: 'CRITIC + MOORA', result: 'Supplier 4 (%92)' },
+    { id: '003', name: 'YATIRIM KARARI', icon: <DollarSign />, client: 'Yatırımcı', criteria: 6, alts: 5, arch: 'AHP + VIKOR', result: 'Estate A (%84)' },
+    { id: '004', name: 'YAZILIM SEÇİMİ', icon: <Code />, client: 'Teknoloji', criteria: 10, alts: 6, arch: 'Entropy + WASPAS', result: 'Cloud X (%98)' },
+    { id: '005', name: 'PERSONEL DEĞ.', icon: <Users />, client: 'İK Birimi', criteria: 7, alts: 15, arch: 'AHP + EDAS', result: 'Aday 3 (%89)' },
+    { id: '006', name: 'PROJE ÖNCELİK.', icon: <Grid />, client: 'Ürün Yönetimi', criteria: 4, alts: 20, arch: 'CRITIC + CODAS', result: 'Task Alpha (%95)' }
+  ];
+
+  const comparisonTable = [
+    { need: 'Objektiflik', w: 'Entropy', r: 'TOPSIS', diff: 2, time: "5'", acc: 70 },
+    { need: 'Çatışma Var', w: 'CRITIC', r: 'CODAS', diff: 3, time: "10'", acc: 85 },
+    { need: 'Kişisel Önc.', w: 'AHP', r: 'VIKOR', diff: 4, time: "15'", acc: 80 },
+    { need: 'Maks. Doğruluk', w: 'CRITIC', r: 'WASPAS', diff: 5, time: "12'", acc: 100 },
+    { need: 'Hızlı Karar', w: 'CRITIC', r: 'MOORA', diff: 2, time: "5'", acc: 75 },
+    { need: 'Belirsizlik', w: 'Entropy', r: 'EDAS', diff: 3, time: "8'", acc: 80 }
   ];
 
   return (
-    <div className="blueprint-immersive fade-in" style={{ 
-      background: '#0a0f1d', 
-      minHeight: '100vh', 
-      color: '#fff', 
-      fontFamily: "'Outfit', sans-serif",
-      backgroundImage: `linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px)`,
-      backgroundSize: '30px 30px',
-      paddingBottom: '100px'
-    }}>
-      {/* Blueprint Header */}
-      <nav style={{ padding: '25px 60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #10b981', background: 'rgba(10, 15, 29, 0.95)', position: 'sticky', top: 0, zIndex: 1000, backdropFilter: 'blur(20px)' }}>
-        <div className="flex items-center gap-4">
-          <div style={{ border: '2px solid #10b981', padding: '6px' }}>
-            <Zap size={28} fill="#10b981" color="#10b981" />
-          </div>
-          <div className="flex flex-col">
-            <span style={{ fontWeight: 900, fontSize: '1.4rem', letterSpacing: '-1px' }}>THE BLUEPRINT <span style={{ color: '#10b981' }}>📐</span></span>
-            <span style={{ fontSize: '0.6rem', fontWeight: 800, opacity: 0.6, letterSpacing: '0.4em' }}>KARAR MİMARİNİZ v8.5</span>
-          </div>
+    <div className="blueprint-master blueprint-grid-bg fade-in" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+      
+      {/* 1. HERO SECTION */}
+      <nav style={{ padding: '25px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--blueprint-primary)', background: 'var(--blueprint-bg)', position: 'sticky', top: 0, zIndex: 1000 }}>
+        <div className="flex items-center gap-3">
+          <Zap size={28} color="var(--blueprint-primary)" fill="var(--blueprint-primary)" />
+          <span className="mono" style={{ fontWeight: 900, fontSize: '1.4rem', color: 'var(--blueprint-primary)' }}>THE BLUEPRINT 📐</span>
         </div>
-        <button onClick={onBack} className="btn-elite btn-elite-secondary" style={{ padding: '10px 30px', borderRadius: '4px', border: '1px solid #10b981', color: '#10b981' }}>
+        <button onClick={onBack} className="btn-elite btn-blueprint">
           <ChevronLeft size={18} /> HUB'A DÖN
         </button>
       </nav>
 
-      <div className="container" style={{ maxWidth: '1300px', margin: '0 auto', padding: '80px 20px' }}>
-        
-        {/* Section 1: Hero */}
-        <header style={{ textAlign: 'center', marginBottom: '150px' }}>
-          <div className="badge-v6" style={{ margin: '0 auto 30px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981', color: '#10b981', padding: '8px 25px' }}>
-            HER BÜYÜK KARAR BİR PLAN İLE BAŞLAR
-          </div>
-          <h1 style={{ fontSize: '7rem', fontWeight: 900, lineHeight: '0.9', letterSpacing: '-6px', marginBottom: '40px' }} className="shimmer-text">
-            Kararın <br/> Mimarisini Çiz.
-          </h1>
-          <p style={{ fontSize: '1.5rem', color: '#94A3B8', maxWidth: '850px', margin: '0 auto 60px', lineHeight: '1.5' }}>
-            Vestra Elite, belirsizliği matematiksel bir taslağa dönüştürür. <br/>
-            Kimi AI ve 12+ hibrit metodoloji ile geleceğinizi saniyeler içinde inşa edin.
-          </p>
-          <div className="flex gap-4 justify-center">
-             <button className="btn-elite btn-elite-primary" style={{ padding: '20px 50px', fontSize: '1.2rem', borderRadius: '0', border: '2px solid #fff' }} onClick={onBack}>PLANIMI ÇİZ</button>
-             <button className="btn-elite btn-elite-secondary" style={{ padding: '20px 50px', fontSize: '1.2rem', borderRadius: '0', border: '2px solid #10b981' }}>DEMO İNCELE</button>
-          </div>
+      <div className="container" style={{ maxWidth: '1200px' }}>
+        <header style={{ textAlign: 'center', padding: '100px 0', borderBottom: '1px dashed var(--blueprint-primary)' }}>
+           <h1 className="mono" style={{ fontSize: '4.5rem', fontWeight: 900, color: 'var(--blueprint-primary)', marginBottom: '20px' }}>THE BLUEPRINT</h1>
+           <h2 className="technical" style={{ fontSize: '1.5rem', color: 'var(--blueprint-dark)', marginBottom: '40px', fontWeight: 700 }}>Her Büyük Karar Bir Plan ile Başlar</h2>
+           <p className="mono" style={{ fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 60px', opacity: 0.8 }}>
+             Arabadan tedarikçiye, yatırımdan personel seçimine - doğru kararın mimarisini birlikte çizelim. 
+             Vestra Elite, belirsizliği teknik bir taslağa dönüştürür.
+           </p>
+           <div className="flex gap-4 justify-center">
+              <button className="btn-elite btn-blueprint" style={{ padding: '15px 40px' }} onClick={onBack}>PLANIMI ÇİZ</button>
+              <button className="btn-elite" style={{ border: '2px solid var(--blueprint-primary)', color: 'var(--blueprint-primary)', background: 'transparent' }}>DEMO İNCELE</button>
+           </div>
         </header>
 
-        {/* Section 2: Quick Start */}
-        <section style={{ marginBottom: '150px' }}>
-          <h3 style={{ textAlign: 'center', fontSize: '2.5rem', fontWeight: 900, marginBottom: '60px', color: '#10b981' }}>PLANINIZI 3 ADIMDA ÇİZİN 📐</h3>
-          <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
-             <div className="card-elite" style={{ padding: '50px', border: '1px solid #10b981', borderRadius: '0', background: 'rgba(16, 185, 129, 0.02)' }}>
-                <Ruler size={40} color="#10b981" style={{ marginBottom: '25px' }} />
-                <h4 style={{ fontWeight: 900, fontSize: '1.5rem', marginBottom: '20px' }}>01. TEMELİ ATIN</h4>
-                <p style={{ color: '#94A3B8', lineHeight: '1.6' }}>Alternatifleri ve kriterleri tanımlayın. Bu, stratejinizin taşıyıcı kolonlarıdır.</p>
-                <div style={{ marginTop: '30px', borderTop: '1px dashed #10b981', paddingTop: '15px', fontSize: '0.8rem', color: '#10b981', fontWeight: 800 }}>SPEC: 5 Seçenek, 10 Kriter</div>
-             </div>
-             <div className="card-elite" style={{ padding: '50px', border: '1px solid #10b981', borderRadius: '0', background: 'rgba(16, 185, 129, 0.02)' }}>
-                <PenTool size={40} color="#10b981" style={{ marginBottom: '25px' }} />
-                <h4 style={{ fontWeight: 900, fontSize: '1.5rem', marginBottom: '20px' }}>02. MİMARİYİ SEÇİN</h4>
-                <p style={{ color: '#94A3B8', lineHeight: '1.6' }}>Ağırlıklandırma ve Sıralama araçlarını belirleyin. Hangi zekayla inşa edeceksiniz?</p>
-                <div style={{ marginTop: '30px', borderTop: '1px dashed #10b981', paddingTop: '15px', fontSize: '0.8rem', color: '#10b981', fontWeight: 800 }}>SPEC: Entropy + WASPAS Hibriti</div>
-             </div>
-             <div className="card-elite" style={{ padding: '50px', border: '1px solid #10b981', borderRadius: '0', background: 'rgba(16, 185, 129, 0.02)' }}>
-                <Target size={40} color="#10b981" style={{ marginBottom: '25px' }} />
-                <h4 style={{ fontWeight: 900, fontSize: '1.5rem', marginBottom: '20px' }}>03. PLANI YORUMLAYIN</h4>
-                <p style={{ color: '#94A3B8', lineHeight: '1.6' }}>Çizimler tamamlandı. Orti Elite Verdict ile karşılaştırmalı analizi inceleyin.</p>
-                <div style={{ marginTop: '30px', borderTop: '1px dashed #10b981', paddingTop: '15px', fontSize: '0.8rem', color: '#10b981', fontWeight: 800 }}>SPEC: %99.4 Güven Skoru</div>
-             </div>
-          </div>
+        {/* 2. QUICK START */}
+        <section style={{ padding: '100px 0' }}>
+           <h3 className="mono" style={{ fontSize: '2rem', marginBottom: '60px', textAlign: 'center', textTransform: 'uppercase' }}>Planınızı 3 Adımda Çizin</h3>
+           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+              {[
+                { step: '01', title: 'TEMELİ ATIN', icon: <Ruler />, desc: 'Alternatifleri ve kriterleri tanımlayın. Planınızın taşıyıcı kolonları!' },
+                { step: '02', title: 'MİMARİYİ BELİRLEYİN', icon: <PenTool />, desc: 'Hangi araçlarla inşa edeceksiniz? Ağırlıklandırma + Sıralama.' },
+                { step: '03', title: 'PLANI YORUMLAYIN', icon: <Target />, desc: 'Çizimler tamamlandı, karar net! Karşılaştırmalı analizi inceleyin.' }
+              ].map((s, i) => (
+                <div key={i} className="blueprint-border" style={{ padding: '30px', background: 'white' }}>
+                   <div style={{ fontSize: '0.7rem', fontWeight: 900, marginBottom: '20px', opacity: 0.5 }}>ADIM {s.step} / {s.title}</div>
+                   <div style={{ color: 'var(--blueprint-primary)', marginBottom: '20px' }}>{s.icon}</div>
+                   <h4 className="mono" style={{ fontSize: '1.2rem', marginBottom: '15px' }}>{s.title}</h4>
+                   <p style={{ fontSize: '0.9rem', color: 'var(--blueprint-dark)', lineHeight: '1.5' }}>{s.desc}</p>
+                </div>
+              ))}
+           </div>
         </section>
 
-        {/* Section 3: Catalog */}
-        <section style={{ marginBottom: '150px' }}>
-          <h3 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '60px', textAlign: 'center' }}>Çizim Araçları Kataloğu ⚒️</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px' }}>
-             {methods.map((m, i) => (
-               <div key={i} className="card-elite" style={{ padding: '0', borderRadius: '0', border: '1px solid #10b981', background: 'transparent' }}>
-                  <div style={{ padding: '25px', borderBottom: '1px solid #10b981', background: 'rgba(16, 185, 129, 0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                     <h4 style={{ fontWeight: 900, fontSize: '1.6rem' }}>{m.name} {m.emoji}</h4>
-                     <div className="flex gap-1">
-                        {[...Array(m.diff)].map((_, i) => <Star key={i} size={14} fill="#10b981" color="#10b981" />)}
-                     </div>
-                  </div>
-                  <div style={{ padding: '40px' }}>
-                     <p style={{ fontSize: '0.8rem', fontWeight: 900, color: '#94A3B8', marginBottom: '25px' }}>
-                        TİP: {m.type} <br/> SÜRE: ~{m.time} dakika
-                     </p>
-                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
-                        <div>
-                           <p style={{ fontSize: '0.9rem', fontWeight: 900, color: '#10b981', marginBottom: '10px' }}>📐 NE YAPAR?</p>
-                           <p style={{ fontSize: '0.9rem', color: '#94A3B8' }}>{m.what}</p>
-                        </div>
-                        <div>
-                           <p style={{ fontSize: '0.9rem', fontWeight: 900, color: '#10b981', marginBottom: '10px' }}>🔍 NASIL ÇALIŞIR?</p>
-                           <p style={{ fontSize: '0.9rem', color: '#94A3B8' }}>{m.how}</p>
-                        </div>
-                     </div>
-                     <div style={{ marginTop: '30px', padding: '20px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <p style={{ fontSize: '0.9rem', fontWeight: 900, color: '#10b981', marginBottom: '10px' }}>✅ NE ZAMAN KULLAN?</p>
-                        <ul style={{ fontSize: '0.85rem', color: '#94A3B8', paddingLeft: '20px' }}>
-                           {m.when.map((w, j) => <li key={j}>{w}</li>)}
-                        </ul>
-                     </div>
-                     <div style={{ marginTop: '30px', padding: '20px', borderLeft: '3px solid #10b981', background: 'rgba(16, 185, 129, 0.05)' }}>
-                        <p style={{ fontSize: '0.8rem', fontWeight: 900, opacity: 0.5 }}>💡 MİMARIN NOTU:</p>
-                        <p style={{ fontSize: '1rem', italic: 'true' }}>"{m.note}"</p>
-                     </div>
-                  </div>
-               </div>
-             ))}
-          </div>
+        {/* 3. TOOLKIT TREE */}
+        <section style={{ padding: '100px 0', borderTop: '1px dashed var(--blueprint-primary)' }}>
+           <h3 className="mono" style={{ fontSize: '2rem', marginBottom: '60px', textAlign: 'center' }}>ARAÇ KUTUNUZ 🧰</h3>
+           <div className="blueprint-border" style={{ padding: '60px', background: 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
+              <div className="mono" style={{ padding: '15px', border: '1px solid var(--blueprint-primary)', display: 'inline-block', marginBottom: '40px', background: 'white' }}>PLANI ÇİZMEYE HAZIR MISINIZ?</div>
+              <div className="flex justify-center gap-20">
+                 <div>
+                    <div className="mono" style={{ padding: '10px 20px', border: '1px solid var(--blueprint-primary)', background: 'white', fontSize: '0.8rem' }}>OBJEKTİF VERİLER</div>
+                    <div className="technical" style={{ marginTop: '20px', fontSize: '0.7rem' }}>[Entropy / CRITIC]</div>
+                 </div>
+                 <div>
+                    <div className="mono" style={{ padding: '10px 20px', border: '1px solid var(--blueprint-primary)', background: 'white', fontSize: '0.8rem' }}>KİŞİSEL ÖNCELİKLER</div>
+                    <div className="technical" style={{ marginTop: '20px', fontSize: '0.7rem' }}>[AHP + VIKOR]</div>
+                 </div>
+                 <div>
+                    <div className="mono" style={{ padding: '10px 20px', border: '1px solid var(--blueprint-primary)', background: 'white', fontSize: '0.8rem' }}>HİBRİT YAKLAŞIM</div>
+                    <div className="technical" style={{ marginTop: '20px', fontSize: '0.7rem' }}>[CRITIC + WASPAS]</div>
+                 </div>
+              </div>
+           </div>
         </section>
 
-        {/* Section 4: Comparison Table */}
-        <section style={{ marginBottom: '150px' }}>
-          <h3 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '60px', textAlign: 'center' }}>Mimar Masası: Karşılaştırma 📊</h3>
-          <div className="card-elite" style={{ padding: '0', borderRadius: '0', border: '1px solid #10b981', overflowX: 'auto' }}>
-             <table className="elite-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                   <tr style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
-                      <th style={{ textAlign: 'left', padding: '25px' }}>İHTİYACINIZ</th>
-                      <th>AĞIRLIK</th>
-                      <th>SIRALAMA</th>
-                      <th>ZORLUK</th>
-                      <th>HASSASİYET</th>
-                   </tr>
-                </thead>
-                <tbody>
-                   {[
-                     { need: 'Tam Objektiflik', w: 'Entropy', r: 'TOPSIS', d: 2, acc: 80 },
-                     { need: 'Zıt Hedefler', w: 'CRITIC', r: 'CODAS', d: 3, acc: 90 },
-                     { need: 'Kişisel Vizyon', w: 'AHP', r: 'VIKOR', d: 4, acc: 85 },
-                     { need: 'Maks. Doğruluk', w: 'CRITIC', r: 'WASPAS', d: 5, acc: 100 },
-                     { need: 'Hızlı Karar', w: 'Entropy', r: 'MOORA', d: 2, acc: 75 }
-                   ].map((row, i) => (
-                     <tr key={i} style={{ borderBottom: '1px solid rgba(16, 185, 129, 0.1)' }}>
-                        <td style={{ textAlign: 'left', padding: '25px', fontWeight: 900 }}>{row.need}</td>
-                        <td style={{ fontWeight: 800 }}>{row.w}</td>
-                        <td style={{ fontWeight: 800 }}>{row.r}</td>
-                        <td>
-                           <div style={{ display: 'flex', gap: '2px', justifyContent: 'center' }}>
-                              {[...Array(row.d)].map((_, j) => <Star key={j} size={10} fill="#10b981" color="#10b981" />)}
-                           </div>
-                        </td>
-                        <td>
-                           <div style={{ width: '120px', height: '10px', background: 'rgba(255,255,255,0.05)', margin: '0 auto', borderRadius: '10px', overflow: 'hidden' }}>
-                              <div style={{ width: `${row.acc}%`, height: '100%', background: '#10b981' }}></div>
-                           </div>
-                        </td>
-                     </tr>
-                   ))}
-                </tbody>
-             </table>
-          </div>
+        {/* 4. METHOD CATALOG */}
+        <section style={{ padding: '100px 0' }}>
+           <h3 className="mono" style={{ fontSize: '2rem', marginBottom: '60px', textAlign: 'center' }}>Çizim Araçları Kataloğu 📐</h3>
+           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '30px' }}>
+              {methods.map((m, i) => (
+                <div key={i} className="blueprint-card" style={{ padding: '0' }}>
+                   <div style={{ padding: '20px', borderBottom: '2px solid var(--blueprint-primary)', background: 'rgba(30, 64, 175, 0.05)', display: 'flex', justifyContent: 'space-between' }}>
+                      <span className="mono" style={{ fontWeight: 900 }}>{m.name} {m.emoji}</span>
+                      <div className="flex gap-1">
+                        {[...Array(m.diff)].map((_, j) => <Star key={j} size={12} fill="var(--blueprint-primary)" color="var(--blueprint-primary)" />)}
+                      </div>
+                   </div>
+                   <div style={{ padding: '25px' }}>
+                      <div className="technical" style={{ fontSize: '0.7rem', marginBottom: '20px', opacity: 0.6 }}>TİP: {m.type} | SÜRE: ~{m.time} dk</div>
+                      <div style={{ marginBottom: '20px' }}>
+                         <p className="mono" style={{ fontSize: '0.8rem', fontWeight: 900, color: 'var(--blueprint-primary)' }}>📐 NE YAPAR?</p>
+                         <p style={{ fontSize: '0.85rem' }}>{m.what}</p>
+                      </div>
+                      <div style={{ marginBottom: '20px' }}>
+                         <p className="mono" style={{ fontSize: '0.8rem', fontWeight: 900, color: 'var(--blueprint-primary)' }}>🔍 NASIL ÇALIŞIR?</p>
+                         <p style={{ fontSize: '0.85rem' }}>{m.how}</p>
+                      </div>
+                      <div style={{ padding: '15px', background: 'var(--blueprint-bg)', border: '1px dashed var(--blueprint-primary)', marginTop: '20px' }}>
+                         <p className="technical" style={{ fontSize: '0.7rem', fontWeight: 900 }}>💡 MİMAR NOTU:</p>
+                         <p style={{ fontSize: '0.85rem', fontStyle: 'italic' }}>"{m.note}"</p>
+                      </div>
+                   </div>
+                </div>
+              ))}
+           </div>
         </section>
 
-        {/* Section 5: Projects */}
-        <section style={{ marginBottom: '150px' }}>
-          <h3 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '60px', textAlign: 'center' }}>Tamamlanmış Projeler 🏗️</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
-             {projects.map((p, i) => (
-               <div key={i} className="card-elite" style={{ padding: '0', borderRadius: '0', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)' }}>
-                  <div style={{ padding: '20px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                     {p.icon}
-                     <span style={{ fontWeight: 900 }}>PROJE #{p.id}: {p.name}</span>
-                  </div>
-                  <div style={{ padding: '30px' }}>
-                     <p style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '20px' }}>MÜŞTERİ: {p.client}</p>
-                     <div style={{ margin: '20px 0', padding: '15px', borderLeft: '2px solid #10b981', background: 'rgba(16,185,129,0.05)' }}>
-                        <p style={{ fontSize: '0.7rem', fontWeight: 900, color: '#10b981' }}>MİMARİ:</p>
-                        <p style={{ fontSize: '0.9rem', fontWeight: 800 }}>{p.arch}</p>
-                     </div>
-                     <p style={{ fontWeight: 900, color: '#10b981' }}>SONUÇ: {p.result}</p>
-                     <button className="btn-elite btn-elite-primary" style={{ width: '100%', marginTop: '25px', padding: '12px', fontSize: '0.8rem', borderRadius: '0' }}>PLANI İNCELE</button>
-                  </div>
-               </div>
-             ))}
-          </div>
+        {/* 5. PROJECTS */}
+        <section style={{ padding: '100px 0' }}>
+           <h3 className="mono" style={{ fontSize: '2rem', marginBottom: '60px', textAlign: 'center' }}>Tamamlanmış Projeler 🏗️</h3>
+           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+              {projects.map((p, i) => (
+                <div key={i} className="blueprint-border" style={{ background: 'white', padding: '0' }}>
+                   <div style={{ padding: '15px 25px', borderBottom: '1px solid var(--blueprint-primary)', background: 'var(--blueprint-bg)', display: 'flex', alignItems: 'center', gap: '15px' }}>
+                      {p.icon}
+                      <span className="mono" style={{ fontSize: '0.8rem', fontWeight: 900 }}>PROJE #{p.id}: {p.name}</span>
+                   </div>
+                   <div style={{ padding: '25px', fontSize: '0.8rem' }}>
+                      <p style={{ marginBottom: '5px' }}><span className="technical">MÜŞTERİ:</span> {p.client}</p>
+                      <p style={{ marginBottom: '5px' }}><span className="technical">YAPI:</span> {p.criteria} Kriter, {p.alts} Seçenek</p>
+                      <div style={{ margin: '20px 0', padding: '15px', background: 'var(--blueprint-bg)', borderLeft: '3px solid var(--blueprint-primary)' }}>
+                         <p className="mono" style={{ fontSize: '0.7rem', color: 'var(--blueprint-primary)', fontWeight: 900 }}>SEÇİLEN MİMARİ:</p>
+                         <p className="technical">├─ {p.arch}</p>
+                      </div>
+                      <p style={{ fontWeight: 900, color: 'var(--blueprint-primary)' }}>SONUÇ: {p.result}</p>
+                      <button className="btn-elite btn-blueprint" style={{ width: '100%', marginTop: '20px', padding: '10px', fontSize: '0.7rem', borderRadius: '0' }}>PLANI İNCELE</button>
+                   </div>
+                </div>
+              ))}
+           </div>
         </section>
 
-        {/* Section 6: FAQ */}
-        <section style={{ marginBottom: '150px' }}>
-          <h3 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '60px', textAlign: 'center' }}>Teknik Şartname (SSS) ❓</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '900px', margin: '0 auto' }}>
-             {[
-               { q: "AHP'de uzman görüşü nereden geliyor?", a: "Sistemde iki seçeneğiniz var: Kendi tecrübenizle manuel puanlama yapabilir veya 'Kimi AI Expert' modunu açarak sistemin binlerce akademik veriyi sizin yerinize süzmesini sağlayabilirsiniz." },
-               { q: "Hangi yöntemi seçeceğimi bilemezsem ne yapmalıyım?", a: "Vestra Elite'in 'Auto-Architect' özelliği ile verilerinizi girin, Orti arka planda 12 modeli de koştursun ve size en güvenilir konsensüs sonucunu raporlasın." },
-               { q: "Verilerim güvende mi?", a: "Tüm hesaplamalar yerel tarayıcı belleğinizde yapılır. Stratejik verileriniz sunucularımıza asla gönderilmez, 'Obsidian-Grade' güvenlik protokolü ile korunur." }
-             ].map((item, i) => (
-               <div key={i} className="card-elite" style={{ padding: '40px', borderRadius: '0', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-                  <p style={{ fontWeight: 900, color: '#10b981', marginBottom: '15px', fontSize: '1.1rem' }}>SORU {i+1}: {item.q}</p>
-                  <p style={{ color: '#94A3B8', lineHeight: '1.6' }}>{item.a}</p>
-               </div>
-             ))}
-          </div>
+        {/* 6. COMPARISON TABLE */}
+        <section style={{ padding: '100px 0' }}>
+           <h3 className="mono" style={{ fontSize: '2rem', marginBottom: '60px', textAlign: 'center' }}>Mimar Masası: Araç Karşılaştırma 📊</h3>
+           <div className="blueprint-card" style={{ padding: '0', borderRadius: '0', overflow: 'hidden' }}>
+              <table className="blueprint-table">
+                 <thead>
+                    <tr>
+                       <th>İHTİYACINIZ</th>
+                       <th>AĞIRLIK</th>
+                       <th>SIRALAMA</th>
+                       <th>ZORLUK</th>
+                       <th>SÜRE</th>
+                       <th>DOĞRULUK</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    {comparisonTable.map((row, i) => (
+                      <tr key={i}>
+                         <td style={{ fontWeight: 900 }}>{row.need}</td>
+                         <td className="technical">{row.w}</td>
+                         <td className="technical">{row.r}</td>
+                         <td>
+                            <div className="flex gap-1">
+                               {[...Array(row.diff)].map((_, j) => <Star key={j} size={10} fill="var(--blueprint-primary)" color="var(--blueprint-primary)" />)}
+                            </div>
+                         </td>
+                         <td>{row.time}</td>
+                         <td>
+                            <div style={{ height: '8px', width: '100px', background: 'var(--blueprint-grid)', borderRadius: '10px', overflow: 'hidden' }}>
+                               <div style={{ height: '100%', background: 'var(--blueprint-primary)', width: `${row.acc}%` }}></div>
+                            </div>
+                         </td>
+                      </tr>
+                    ))}
+                 </tbody>
+              </table>
+           </div>
+           <p className="technical" style={{ marginTop: '20px', fontSize: '0.7rem', opacity: 0.6 }}>📐 Mimar İpucu: Sütun başlıklarına tıklayarak sıralama yapabilirsiniz.</p>
+        </section>
+
+        {/* 7. FAQ */}
+        <section style={{ padding: '100px 0' }}>
+           <h3 className="mono" style={{ fontSize: '2rem', marginBottom: '60px', textAlign: 'center' }}>Teknik Şartname (SSS) ❓</h3>
+           <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+              {[
+                { q: "AHP'de uzman görüşü nereden gelecek?", a: "Sistemimizde iki seçenek var: AI Asistan Modu (Kimi destekli) veya Manuel Mod." },
+                { q: "Hangi yöntemi seçeceğimi bilemezsem?", a: "Orti v2.0 'Auto-Architect' özelliği ile tüm modelleri koşturur ve konsensüs sonucunu sunar." },
+                { q: "Verilerim güvende mi?", a: "Tüm çizimler yerel tarayıcı belleğinizde saklanır, hiçbir zaman dışarı sızmaz." }
+              ].map((item, i) => (
+                <div key={i} className="blueprint-border" style={{ padding: '30px', background: 'white' }}>
+                   <p className="mono" style={{ fontWeight: 900, color: 'var(--blueprint-primary)', marginBottom: '15px' }}>SORU {i+1}: {item.q}</p>
+                   <p style={{ fontSize: '0.9rem', color: 'var(--blueprint-dark)' }}>{item.a}</p>
+                </div>
+              ))}
+           </div>
         </section>
 
         {/* Final CTA */}
-        <div style={{ textAlign: 'center', marginTop: '100px', padding: '100px', background: 'linear-gradient(to bottom, rgba(16, 185, 129, 0.05), transparent)', borderTop: '1px solid #10b981' }}>
-           <h2 style={{ fontSize: '4.5rem', fontWeight: 900, marginBottom: '40px' }}>İnşaya Hazır Mısınız?</h2>
-           <button onClick={onBack} className="btn-elite btn-elite-primary" style={{ padding: '25px 80px', fontSize: '1.5rem', borderRadius: '0', fontWeight: 900 }}>
-              İLK PLANIMI ÇİZ <ArrowRight size={30} />
-           </button>
-        </div>
+        <section style={{ textAlign: 'center', padding: '100px 0' }}>
+           <div className="blueprint-border" style={{ padding: '100px', background: 'white' }}>
+              <h2 className="mono" style={{ fontSize: '3rem', color: 'var(--blueprint-primary)', marginBottom: '30px' }}>İnşaya Hazır Mısınız?</h2>
+              <p className="mono" style={{ marginBottom: '60px' }}>Hata payını matematiksel olarak sıfırladık. Kendi planınızı şimdi çizin.</p>
+              <button onClick={onBack} className="btn-elite btn-blueprint" style={{ padding: '25px 80px', fontSize: '1.5rem', borderRadius: '0' }}>
+                 İLK PLANIMI ÇİZ <ArrowRight size={30} />
+              </button>
+           </div>
+        </section>
 
       </div>
 
-      <footer style={{ padding: '60px', textAlign: 'center', opacity: 0.3 }}>
-        <p style={{ fontSize: '0.8rem', fontWeight: 900, letterSpacing: '0.6em' }}>VESTRA ELITE - MASTERING THE CHOICE © 2026</p>
+      <footer style={{ padding: '60px', textAlign: 'center', opacity: 0.5 }}>
+         <p className="technical" style={{ fontSize: '0.7rem', fontWeight: 900, letterSpacing: '0.5em' }}>VESTRA ELITE - ARCHITECTURAL DECISION SCIENCE © 2026</p>
       </footer>
     </div>
   );
