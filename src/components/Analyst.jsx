@@ -208,10 +208,10 @@ const Analyst = ({ onBack }) => {
           </div>
 
           <div className="col-span-12 card-elite">
-             <h3>Orti'nin Analizi</h3>
+             <h3>Orti'nin Hibrit Analizi</h3>
              <p className="mt-4 text-lg">
-                Kanki, analize göre en mantıklı yol <span className="text-emerald font-black">{data.alternatives[results.ranking[0].index]}</span> gibi duruyor. 
-                Bu seçenek diğerlerine göre daha dengeli bir verimlilik sunuyor.
+                Kanki, <strong>{activeWeight.toUpperCase()}-{activeRank.toUpperCase()}</strong> hibrit modellemesine göre en mantıklı yol <span className="text-emerald font-black">{data.alternatives[results.ranking[0].index]}</span> gibi duruyor. 
+                Bu model, {activeWeight === 'entropy' ? ' Shannon Entropy' : ' CRITIC'} ile objektif ağırlıklandırılıp <strong>{activeRank.toUpperCase()}</strong> ile bilimsel olarak sıralandı.
              </p>
           </div>
         </div>
