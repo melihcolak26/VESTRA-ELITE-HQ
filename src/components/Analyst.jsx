@@ -25,7 +25,7 @@ import {
   Trash2,
   Share2,
   Wand2,
-  Globe2,
+  Globe,
   Loader2
 } from 'lucide-react';
 import { topsis, edas, codas, calculateEntropyWeights, calculateCriticWeights } from '../engine/mcdm';
@@ -161,7 +161,7 @@ const Analyst = ({ onBack }) => {
           </div>
           <div className="flex gap-4">
              <div className="flex items-center gap-2 bg-white/5 p-1 px-3 rounded-2xl border border-white/10">
-                <Globe2 size={16} className="text-secondary" />
+                <Globe size={16} className="text-secondary" />
                 <input 
                   className="bg-transparent border-none text-xs text-white focus:outline-none w-48" 
                   placeholder="Paste Amazon / Tesla / Spec Link..." 
