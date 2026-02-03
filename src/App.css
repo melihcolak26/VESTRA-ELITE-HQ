@@ -1,21 +1,11 @@
 :root {
   --primary: #10B981;
-  --secondary: #3B82F6;
+  --secondary: #6366F1;
   --bg-dark: #020617;
+  --card-bg: rgba(15, 23, 42, 0.6);
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
-  --glass-border: rgba(255, 255, 255, 0.1);
-
-  /* Blueprint System */
-  --blueprint-primary: #1E40AF;
-  --blueprint-bg: #F0F4F8;
-  --blueprint-grid: #BFDBFE;
-  --blueprint-dark: #1E3A8A;
-  --accent-orange: #F59E0B;
-  --accent-green: #10B981;
-  --accent-red: #DC2626;
-  --weight-blue: #3B82F6;
-  --rank-green: #059669;
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,65 +19,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.mono { font-family: 'JetBrains Mono', monospace; }
-.technical { font-family: 'Courier New', monospace; }
-
-/* Blueprint Pattern */
-.blueprint-grid-bg {
-  background-color: var(--blueprint-bg);
-  background-image: 
-    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
-  background-size: 20px 20px;
-  color: var(--blueprint-dark);
-}
-
-.blueprint-border {
-  border: 2px dashed var(--blueprint-primary);
-  box-shadow: 0 0 0 1px var(--blueprint-primary) inset;
-}
-
-.blueprint-card {
-  background: white;
-  border: 2px solid var(--blueprint-primary);
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.blueprint-card:hover {
-  box-shadow: 0 0 20px rgba(30, 64, 175, 0.2);
-  transform: translateY(-2px);
-}
-
-.blueprint-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border: 2px solid var(--blueprint-primary);
-}
-
-.blueprint-table th {
-  background: var(--blueprint-primary);
-  color: white;
-  padding: 15px;
-  text-align: left;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-}
-
-.blueprint-table td {
-  padding: 15px;
-  border-bottom: 1px solid var(--blueprint-grid);
-  color: var(--blueprint-dark);
-  font-size: 0.9rem;
-}
-
-.blueprint-table tr:hover {
-  background: rgba(30, 64, 175, 0.05);
-}
-
 .shimmer-text {
-  background: linear-gradient(90deg, currentColor 0%, var(--primary) 50%, currentColor 100%);
+  background: linear-gradient(90deg, #fff 0%, var(--primary) 50%, #fff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -99,36 +32,31 @@ body {
   100% { background-position: 200% 0; }
 }
 
-.fade-in { animation: fadeIn 0.5s ease-out forwards; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Utility */
 .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
+
 .btn-elite {
-  padding: 12px 24px;
-  border-radius: 4px;
-  font-weight: 700;
+  padding: 15px 35px;
+  border-radius: 100px;
+  font-weight: 800;
   cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: 0.3s;
+  gap: 12px;
 }
 
-.btn-blueprint {
-  background: var(--blueprint-primary);
-  color: white;
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-}
+.btn-elite-primary { background: #fff; color: #000; }
+.btn-elite-primary:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1); }
 
-.btn-blueprint:hover {
-  background: var(--blueprint-dark);
-}
+.btn-elite-secondary { background: rgba(255,255,255,0.03); color: #fff; border: 1px solid var(--glass-border); }
 
 .card-elite {
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.4);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: 40px;
+  backdrop-filter: blur(20px);
 }
