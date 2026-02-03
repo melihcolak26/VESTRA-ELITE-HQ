@@ -1,0 +1,5 @@
+/*
+  Vestra Elite - Netlify Routing Config
+  Ensures React Router works correctly on direct URL hits.
+*/
+/*  /index.html  200
