@@ -93,7 +93,7 @@ const Blueprint = ({ onBack }) => {
       {/* Dynamic Nav */}
       <nav style={{ padding: '30px 60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(2,6,23,0.3)', backdropFilter: 'blur(30px)', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'sticky', top: 0, zIndex: 1000 }}>
         <div className="flex items-center gap-4">
-          <Zap size={32} fill="#10b981" color="#10b981" className="animate-pulse" />
+          <Zap size={32} fill="#10b981" color="#10b981" />
           <div className="flex flex-col">
             <span className="font-black text-2xl tracking-tighter uppercase leading-none">The Blueprint</span>
             <span className="text-[10px] font-bold text-emerald opacity-60 mt-1 uppercase tracking-[0.3em]">Scientific Methodology v7.0</span>
