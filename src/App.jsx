@@ -4,7 +4,7 @@ import { DECISION_TEMPLATES } from './templates/data'
 import Wizard from './components/Wizard'
 import Analyst from './components/Analyst'
 import Blueprint from './components/Blueprint'
-import { Zap, Play, BarChart, Shield, Cpu, Lock, HelpCircle, Monitor, ArrowRight, Maximize2, Activity } from 'lucide-react'
+import { Zap, Play, Layout, Shield, Cpu, Lock, HelpCircle, Monitor, ArrowRight, Maximize2, Activity } from 'lucide-react'
 
 function App() {
   const [view, setView] = useState(() => localStorage.getItem('vestra_view') || 'landing')

@@ -15,7 +15,7 @@ import {
   Box,
   Compass,
   ZapOff,
-  BarChart,
+  Layout,
   Lightbulb,
   Gem,
   CheckCircle2,
@@ -36,9 +36,7 @@ const Blueprint = ({ onBack }) => {
           <circle cx="100" cy="100" r="80" fill="none" stroke="#10b981" strokeWidth="1" strokeDasharray="4" />
           <path d="M100 20 V180 M20 100 H180" stroke="#10b981" strokeWidth="0.5" strokeOpacity="0.3" />
           <rect x="70" y="70" width="60" height="60" fill="none" stroke="#10b981" strokeWidth="3" rx="12" />
-          <circle cx="100" cy="100" r="10" fill="#10b981">
-            <animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite" />
-          </circle>
+          <circle cx="100" cy="100" r="10" fill="#10b981" />
           <path d="M40 40 L60 60 M140 140 L160 160 M160 40 L140 60 M40 160 L60 140" stroke="#10b981" strokeWidth="2" strokeOpacity="0.5" />
         </svg>
       )
