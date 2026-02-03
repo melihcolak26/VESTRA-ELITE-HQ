@@ -1,24 +1,28 @@
 :root {
-  /* Blueprint Colors */
-  --bp-bg: #f8fafc;
-  --bp-grid: #cbd5e1;
-  --bp-primary: #1e40af;
-  --bp-dark: #1e3a8a;
-  --bp-accent: #f59e0b;
-  --bp-green: #10b981;
-  --bp-red: #ef4444;
-  
-  /* System Defaults */
-  --primary: #10b981;
+  /* System Colors */
+  --primary: #10B981;
+  --secondary: #3B82F6;
   --bg-dark: #020617;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --glass-border: rgba(255, 255, 255, 0.05);
+
+  /* Elite Blueprint System (Dark Mode) */
+  --bp-bg: #020617;
+  --bp-grid: rgba(16, 185, 129, 0.08);
+  --bp-primary: #10B981;
+  --bp-dark: #0f172a;
+  --bp-accent: #6366F1;
+  --bp-line: rgba(16, 185, 129, 0.2);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
+  background: var(--bg-dark);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
+  min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -26,44 +30,40 @@ body {
 .mono { font-family: 'JetBrains Mono', monospace; }
 .technical { font-family: 'Courier New', monospace; }
 
-/* The Blueprint Paper Effect */
+/* The Dark Blueprint Grid */
 .blueprint-paper {
   background-color: var(--bp-bg);
   background-image: 
     linear-gradient(var(--bp-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--bp-grid) 1px, transparent 1px);
-  background-size: 30px 30px;
-  color: var(--bp-dark);
-  min-height: 100vh;
+  background-size: 40px 40px;
+  color: #fff;
 }
 
 .blueprint-border {
-  border: 2px solid var(--bp-primary);
+  border: 1px solid var(--bp-line);
   position: relative;
-}
-
-.blueprint-border-dashed {
-  border: 2px dashed var(--bp-primary);
+  background: rgba(15, 23, 42, 0.3);
 }
 
 .blueprint-card {
-  background: white;
-  border: 2px solid var(--bp-primary);
-  box-shadow: 5px 5px 0px rgba(30, 64, 175, 0.1);
-  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--bp-line);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .blueprint-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px rgba(30, 64, 175, 0.15);
+  border-color: var(--bp-primary);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+  transform: translateY(-5px);
 }
 
-/* Measurement lines */
 .measure-h {
   position: relative;
   height: 1px;
-  background: var(--bp-primary);
-  margin: 20px 0;
+  background: var(--bp-line);
+  margin: 30px 0;
 }
 .measure-h::before, .measure-h::after {
   content: '';
@@ -75,42 +75,76 @@ body {
 }
 .measure-h::after { right: 0; }
 
+/* Table Style */
+.blueprint-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.blueprint-table th {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--bp-primary);
+  padding: 20px;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  border-bottom: 1px solid var(--bp-line);
+}
+.blueprint-table td {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+/* Shimmer & Glow */
+.shimmer-text {
+  background: linear-gradient(90deg, #fff 0%, var(--bp-primary) 50%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
 /* Buttons */
 .btn-bp {
-  padding: 12px 24px;
+  padding: 15px 35px;
   background: var(--bp-primary);
-  color: white;
+  color: #000;
   font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
+  font-weight: 900;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  text-transform: uppercase;
-  font-size: 0.8rem;
+  transition: 0.3s;
 }
+.btn-bp:hover { filter: brightness(1.2); transform: scale(1.05); }
 
 .btn-bp-outline {
-  padding: 12px 24px;
+  padding: 15px 35px;
   background: transparent;
   color: var(--bp-primary);
-  border: 2px solid var(--bp-primary);
+  border: 1px solid var(--bp-primary);
   font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
+  font-weight: 900;
   cursor: pointer;
 }
 
-/* Animations */
-.draw-line {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: draw 2s ease-out forwards;
+.badge-v6 {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--bp-line);
+  color: var(--bp-primary);
+  padding: 6px 15px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
-}
-
-.fade-in { animation: fadeIn 0.6s ease-out forwards; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
