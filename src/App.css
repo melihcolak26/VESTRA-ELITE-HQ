@@ -1,25 +1,24 @@
 :root {
-  /* Dark Blueprint System */
-  --bp-bg: #020617;
-  --bp-grid: rgba(16, 185, 129, 0.08);
-  --bp-primary: #10B981;
-  --bp-dark: #0f172a;
-  --bp-accent: #3B82F6;
-  --bp-line: rgba(16, 185, 129, 0.2);
-  --bp-text: #F8FAFC;
-  --bp-secondary: #94A3B8;
-
-  /* System Colors */
+  /* Vestra Elite Palette */
   --primary: #10B981;
+  --secondary: #6366F1;
+  --accent: #0EA5E9;
   --bg-dark: #020617;
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Blueprint v8.5 Design Tokens */
+  --bp-grid: rgba(16, 185, 129, 0.12); /* Emerald Green Grid */
+  --bp-line: rgba(16, 185, 129, 0.2);
+  --bp-card-bg: rgba(15, 23, 42, 0.6);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--bp-bg);
-  color: var(--bp-text);
+  background: var(--bg-dark);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
@@ -29,9 +28,9 @@ body {
 .mono { font-family: 'JetBrains Mono', monospace; }
 .technical { font-family: 'Courier New', monospace; }
 
-/* The Elite Dark Blueprint Grid */
-.blueprint-paper {
-  background-color: var(--bp-bg);
+/* The Luminous Blueprint Grid */
+.blueprint-paper-v8 {
+  background-color: var(--bg-dark);
   background-image: 
     linear-gradient(var(--bp-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--bp-grid) 1px, transparent 1px);
@@ -45,74 +44,31 @@ body {
   background: rgba(15, 23, 42, 0.3);
 }
 
-.blueprint-border-dashed {
-  border: 1px dashed var(--bp-primary);
-  background: rgba(16, 185, 129, 0.02);
-}
-
 .blueprint-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bp-card-bg);
   border: 1px solid var(--bp-line);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .blueprint-card:hover {
-  border-color: var(--bp-primary);
-  box-shadow: 0 0 40px rgba(16, 185, 129, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
   transform: translateY(-5px);
 }
 
-/* Measurement lines */
-.measure-h {
-  position: relative;
-  height: 1px;
-  background: var(--bp-line);
-  margin: 30px 0;
-}
-.measure-h::before, .measure-h::after {
+.blueprint-card::before {
   content: '';
   position: absolute;
-  top: -5px;
-  width: 1px;
-  height: 10px;
-  background: var(--bp-primary);
-}
-.measure-h::after { right: 0; }
-
-/* Buttons */
-.btn-bp {
-  padding: 15px 35px;
-  background: var(--bp-primary);
-  color: #000;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 900;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: 0.3s;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border: 1px solid var(--primary);
+  opacity: 0.1;
+  pointer-events: none;
 }
 
-.btn-bp:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
-}
-
-.btn-bp-outline {
-  padding: 15px 35px;
-  background: transparent;
-  color: var(--bp-primary);
-  border: 1px solid var(--bp-primary);
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-/* Animation */
 .shimmer-text {
-  background: linear-gradient(90deg, #fff 0%, var(--bp-primary) 50%, #fff 100%);
+  background: linear-gradient(90deg, #fff 0%, var(--primary) 50%, #fff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -127,23 +83,78 @@ body {
 .fade-in { animation: fadeIn 0.8s ease-out forwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Table */
+/* Table v8.5 */
 .blueprint-table {
   width: 100%;
   border-collapse: collapse;
 }
 .blueprint-table th {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--bp-primary);
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--primary);
   padding: 20px;
   text-align: left;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  border-bottom: 1px solid var(--bp-line);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 .blueprint-table td {
   padding: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.9rem;
-  color: var(--bp-secondary);
+  color: #cbd5e1;
 }
-.blueprint-table tr:hover { background: rgba(255,255,255,0.02); }
+.blueprint-table tr:hover { background: rgba(16, 185, 129, 0.03); }
+
+/* Buttons */
+.btn-bp-v8 {
+  padding: 15px 40px;
+  background: var(--primary);
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: 0.3s;
+}
+.btn-bp-v8:hover { filter: brightness(1.2); transform: scale(1.05); }
+
+.btn-bp-outline-v8 {
+  padding: 15px 40px;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.badge-bp {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--bp-line);
+  color: var(--primary);
+  padding: 6px 15px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.measure-h {
+  position: relative;
+  height: 1px;
+  background: var(--bp-line);
+  margin: 30px 0;
+}
+.measure-h::before, .measure-h::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  width: 1px;
+  height: 10px;
+  background: var(--primary);
+}
+.measure-h::after { right: 0; }
