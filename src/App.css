@@ -1,11 +1,19 @@
 :root {
+  /* System Colors */
   --primary: #10B981;
-  --secondary: #6366F1;
+  --secondary: #3B82F6;
   --bg-dark: #020617;
-  --card-bg: rgba(15, 23, 42, 0.6);
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.05);
+
+  /* Elite Blueprint System (The Drawing Table) */
+  --bp-bg: #020617;
+  --bp-grid: rgba(16, 185, 129, 0.08);
+  --bp-primary: #10B981;
+  --bp-dark: #0f172a;
+  --bp-accent: #6366F1;
+  --bp-line: rgba(16, 185, 129, 0.2);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,8 +27,76 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.mono { font-family: 'JetBrains Mono', monospace; }
+.technical { font-family: 'Courier New', monospace; }
+
+/* The Blueprint Grid Aesthetic */
+.blueprint-paper {
+  background-color: var(--bp-bg);
+  background-image: 
+    linear-gradient(var(--bp-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bp-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.blueprint-border {
+  border: 1px solid var(--bp-line);
+  position: relative;
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.blueprint-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--bp-line);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blueprint-card:hover {
+  border-color: var(--bp-primary);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+  transform: translateY(-5px);
+}
+
+.measure-h {
+  position: relative;
+  height: 1px;
+  background: var(--bp-line);
+  margin: 30px 0;
+}
+.measure-h::before, .measure-h::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  width: 1px;
+  height: 10px;
+  background: var(--bp-primary);
+}
+.measure-h::after { right: 0; }
+
+/* Tables */
+.blueprint-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.blueprint-table th {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--bp-primary);
+  padding: 20px;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  border-bottom: 1px solid var(--bp-line);
+}
+.blueprint-table td {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
 .shimmer-text {
-  background: linear-gradient(90deg, #fff 0%, var(--primary) 50%, #fff 100%);
+  background: linear-gradient(90deg, #fff 0%, var(--bp-primary) 50%, #fff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -35,28 +111,38 @@ body {
 .fade-in { animation: fadeIn 0.8s ease-out forwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
-
-.btn-elite {
+/* Executive Buttons */
+.btn-bp {
   padding: 15px 35px;
-  border-radius: 100px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bp-primary);
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
   border: none;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  transition: 0.3s;
+}
+.btn-bp:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+.btn-bp-outline {
+  padding: 15px 35px;
+  background: transparent;
+  color: var(--bp-primary);
+  border: 1px solid var(--bp-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  cursor: pointer;
 }
 
-.btn-elite-primary { background: #fff; color: #000; }
-.btn-elite-primary:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1); }
-
-.btn-elite-secondary { background: rgba(255,255,255,0.03); color: #fff; border: 1px solid var(--glass-border); }
-
-.card-elite {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid var(--glass-border);
-  border-radius: 40px;
-  backdrop-filter: blur(20px);
+.badge-v6 {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--bp-line);
+  color: var(--bp-primary);
+  padding: 6px 15px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
