@@ -18,7 +18,7 @@ function App() {
   };
 
   return (
-    <div className="platform-root" style={{ background: '#020617', minHeight: '100vh', color: '#fff' }}>
+    <div className="platform-root" style={{ background: '#000', minHeight: '100vh', color: '#fff' }}>
       {view === 'landing' && (
         <div className="landing-page fade-in">
           <nav className="nav-elite" style={{ background: 'rgba(2, 6, 23, 0.95)', padding: '25px', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
